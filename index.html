@@ -1288,7 +1288,7 @@
 
 <script>
   (function () {
-    var STORAGE_PREFIX = 'fp5885v2-';
+    var STORAGE_PREFIX = 'fp5885v2-'; var SAVED={"tt-lt1-6":{s:"ok"},"ls-1-1":{s:"ok"},"ls-1-5":{s:"ok"},"ls-2-1":{s:"ok"},"tt-4-3":{s:"ok"},"tt-4-1":{s:"warn",d:"Antes de clicar, os apps não ficam em ordem de uso, eles ficam em uma ordem aleatória. Depois de clicar, eles vão para a ordem de uso"},"tt-2-4":{s:"warn",d:"Caso troque a data/horário do dispositivo filho, ele usa a data do filho como base (perguntar se isso é intencional)"},"tt-2-3":{s:"ok"},"ls-1-4":{s:"warn",d:"Quando a lista de resultados é grande, ele ocupa a tela toda, e alguns endereços ficam pra fora, pois essa lista não tem scroll."},"tt-lt3-2":{s:"ok"},"ls-2-5":{s:"ok"},"tt-4-10":{s:"ok"},"ls-1-7":{s:"ok"},"tt-3-1":{s:"ok"},"tt-lt2-5":{s:"ok"},"ls-4-1":{s:"ok"},"tt-4-4":{s:"ok"},"ls-4-4":{s:"warn",d:"Tudo funcionando. Mas o bot de Whatsapp parou de funcionar devido ao cancelamento do chip. Conferir com o José Bruno"},"ls-5-2":{s:"ok"},"tt-4-7":{s:"warn",d:"Funciona, mas ao clicar nos últimos 30 dias, ele não fica a mostra selecionado no topo"},"ls-1-3":{s:"ok"},"tt-lt1-7":{s:"ok"},"tt-4-6":{s:"ok"},"tt-lt1-3":{s:"ok"},"tt-1-1":{s:"ok"},"tt-lt1-5":{s:"ok"},"ls-3-3":{s:"ok"},"ls-4-3":{s:"ok"},"tt-lt1-8":{s:"ok"},"ls-5-4":{s:"fail",d:"Linha do tempo está vazia, em ambos os dispositivos"},"tt-lt2-1":{s:"ok"},"tt-1-4":{s:"ok"},"ls-2-2":{s:"ok"},"tt-lt1-2":{s:"ok"},"tt-lt3-3":{s:"warn",d:"Funcionando, mas os chips não parecem ser clicáveis. Melhorar o design ou a forma com que isso é mostrado"},"ls-4-2":{s:"ok"},"tt-lt1-1":{s:"ok"},"tt-lt3-6":{s:"ok"},"tt-2-1":{s:"ok"},"tt-lt3-4":{s:"warn",d:"Funciona, mas ao clicar em Selecionar no Mapa, a tela de criação de GeoFence tem um design diferente da parte de Criar GeoFence no mapa. Também não é possivel alterar a localização clicando no mapa"},"ls-2-3":{s:"ok"},"tt-lt2-3":{s:"ok"},"ls-1-2":{s:"ok"},"tt-lt3-1":{s:"ok"},"ls-3-1":{s:"ok"},"tt-lt1-4":{s:"ok"},"tt-lt3-5":{s:"fail",d:"Realmente, ele não salva a GeoFence, logo o bloqueio não está funcionando"},"ls-3-4":{s:"ok"},"ls-5-3":{s:"fail",d:"Linha do tempo está vazia, em ambos os dispositivos"},"tt-4-2":{s:"ok"},"tt-lt2-4":{s:"ok"},"tt-4-5":{s:"ok"},"tt-3-2":{s:"ok"},"tt-1-2":{s:"ok"},"tt-1-3":{s:"ok"},"tt-1-5":{s:"warn",d:"Tudo funcionando. Mas o bot de Whatsapp parou de funcionar devido ao cancelamento do chip. Conferir com o José Bruno"},"tt-1-6":{s:"ok"},"tt-2-5":{s:"ok"},"tt-2-2":{s:"ok"},"tt-4-8":{s:"ok"},"ls-5-1":{s:"ok"},"ls-2-4":{s:"fail",d:"Não é possível mexer no mapa nessa tela, também não existe um botão de centralizar"},"ls-3-2":{s:"ok"},"ls-1-6":{s:"ok"},"tt-lt2-2":{s:"ok"},"tt-4-9":{s:"ok"}};
     var STATUSES = [
       { value: 'ok', symbol: '✅', title: 'Funcionando' },
       { value: 'warn', symbol: '⚠️', title: 'Funciona, mas com problema' },
@@ -1332,18 +1332,18 @@
       var key = item.dataset.key;
       var savedStatus, savedDesc;
       try {
-        savedStatus = localStorage.getItem(STORAGE_PREFIX + 'status-' + key);
-        savedDesc = localStorage.getItem(STORAGE_PREFIX + 'desc-' + key);
+        var rec = SAVED[key] || {}; savedStatus = rec.s;
+        savedDesc = rec.d;
       } catch (e) {}
 
       if (savedStatus) {
         item.dataset.status = savedStatus;
         var input = item.querySelector('.status-input[value="' + savedStatus + '"]');
-        if (input) input.checked = true;
+        if (input) input.checked = true; item.querySelectorAll('.status-input').forEach(function (inp) { inp.disabled = true; });
       }
 
       var textarea = item.querySelector('.step__desc');
-      if (savedDesc) textarea.value = savedDesc;
+      if (savedDesc) textarea.value = savedDesc; textarea.readOnly = true;
 
       var debounceTimer;
       textarea.addEventListener('input', function () {
@@ -1377,7 +1377,7 @@
       tallyFail.textContent = fail;
     }
 
-    document.getElementById('resetBtn').addEventListener('click', function () {
+    document.getElementById('resetBtn').style.display = 'none'; document.getElementById('resetBtn').addEventListener('click', function () { return;
       stepItems.forEach(function (item) {
         var key = item.dataset.key;
         delete item.dataset.status;
